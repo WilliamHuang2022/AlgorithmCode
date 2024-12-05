@@ -19,7 +19,7 @@ def max_heap(lis):
                 if lis[left]>lis[right]:
                     lis[father]=lis[left]
                     lis[left]=tmp
-                elif lis[right]>lis[left]:
+                elif lis[right]>=lis[left]:
                     lis[father]=lis[right]
                     lis[right]=tmp
                 if 2*left+2<n and max(lis[2*left+1],lis[2*left+2])>lis[left]:
