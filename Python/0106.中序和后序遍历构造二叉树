@@ -1,0 +1,47 @@
+主要是利用中序遍历和后序遍历的序列来重新构造二叉树，递归版本比较好写，迭代版本还需要思考。
+
+```python
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+class Solution:
+    def buildTree(self, inorder: list[int], postorder: list[int]):
+        def make(root,left_list,right_list,postorder):
+            if not left_list and not right_list:
+                return
+            # if not postorder:
+            #     return
+            
+            if postorder[-1] in right_list:
+                num=postorder.pop()
+                rightchild=TreeNode(val=num)
+                root.right=rightchild
+                site=right_list.index(num)
+                sub_left_list=right_list[:site]
+                sub_right_list=right_list[site+1:]
+                make(rightchild,sub_left_list,sub_right_list,postorder)
+            if not postorder:
+                return
+            if postorder[-1] in left_list:
+                num=postorder.pop()
+                leftchild=TreeNode(val=num)
+                root.left=leftchild
+                site=left_list.index(num)
+                sub_left_list=left_list[:site]
+                sub_right_list=left_list[site+1:]
+                make(leftchild,sub_left_list,sub_right_list,postorder)
+            return
+        if postorder==[]:
+            return None
+        num=postorder.pop()
+        site=inorder.index(num)
+        left_list=inorder[:site]
+        right_list=inorder[site+1:]
+        root=TreeNode(val=num)
+        make(root,left_list,right_list,postorder)
+        return root
+
+```
